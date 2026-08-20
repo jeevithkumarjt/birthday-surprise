@@ -6,11 +6,24 @@
   <meta name="description" content="An interactive birthday surprise experience" />
   <link rel="manifest" href="manifest.json" />
   <title>Happy Birthday</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:,">
 </head>
 <body>
   <div class="app">
+    <!-- Ambient particle backgrounds -->
+    <div class="ambient-particles" id="ambient-1"></div>
+    <div class="ambient-particles" id="ambient-2"></div>
+    <div class="ambient-particles" id="ambient-3"></div>
+    <div class="ambient-particles" id="ambient-4"></div>
+    <div class="ambient-particles" id="ambient-5"></div>
+    <div class="ambient-particles" id="ambient-6"></div>
+    <div class="ambient-particles" id="ambient-7"></div>
+    <div class="ambient-particles" id="ambient-final"></div>
+
     <!-- Scene 1: Locked Surprise -->
     <section id="scene-1" class="scene scene--active">
       <div class="scene-bg scene-bg--subtle"></div>
@@ -20,15 +33,16 @@
             <div class="envelope__flap"></div>
             <div class="envelope__body">
               <div class="envelope__seal"></div>
+              <div class="envelope-light"></div>
               <p class="envelope__hint">Tap to open</p>
             </div>
           </div>
           <div class="envelope-shadow"></div>
         </div>
         <div class="intro-text">
-          <p>Someone has a little surprise for you…</p>
+          <p class="stagger-text">Someone has a little surprise for you…</p>
         </div>
-        <button class="btn btn--primary" id="open-envelope-btn" aria-label="Open the envelope">
+        <button class="btn btn--primary pulse-ring" id="open-envelope-btn" aria-label="Open the envelope">
           Tap to Open
         </button>
       </div>
@@ -54,6 +68,7 @@
     <section id="scene-3" class="scene">
       <div class="scene-bg scene-bg--cake"></div>
       <div class="scene-content">
+        <div class="cake-glow"></div>
         <div class="cake-container" id="cake-container">
           <canvas class="cake-canvas" id="cake-canvas" width="400" height="400"></canvas>
           <div class="cake-base"></div>
@@ -74,34 +89,38 @@
       <div class="scene-content">
         <h2 class="gallery-title">Memory Gallery</h2>
         <div class="polaroid-stack" id="polaroid-stack">
-          <div class="polaroid" style="--rotation: -8deg; --delay: 0.2s;">
+          <div class="polaroid" style="--rotation: -8deg; --delay: 0.2s; --z: 20; --brightness: 0.9;">
             <div class="polaroid__frame">
-              <img src="assets/memory-1.svg" alt="Memory 1" />
+              <img src="assets/memory-1.svg" alt="Memory 1" loading="lazy" />
             </div>
             <p class="polaroid__caption">First Coffee Together ☕</p>
           </div>
-          <div class="polaroid" style="--rotation: 5deg; --delay: 0.4s;">
+          <div class="polaroid" style="--rotation: 5deg; --delay: 0.4s; --z: 10; --brightness: 0.8;">
             <div class="polaroid__frame">
-              <img src="assets/memory-2.svg" alt="Memory 2" />
+              <img src="assets/memory-2.svg" alt="Memory 2" loading="lazy" />
             </div>
             <p class="polaroid__caption">Weekend Getaway 🚗</p>
           </div>
-          <div class="polaroid" style="--rotation: -4deg; --delay: 0.6s;">
+          <div class="polaroid" style="--rotation: -4deg; --delay: 0.6s; --z: 15; --brightness: 0.85;">
             <div class="polaroid__frame">
-              <img src="assets/memory-3.svg" alt="Memory 3" />
+              <img src="assets/memory-3.svg" alt="Memory 3" loading="lazy" />
             </div>
             <p class="polaroid__caption">Late Night Chats 🌙</p>
           </div>
-          <div class="polaroid" style="--rotation: 7deg; --delay: 0.8s;">
+          <div class="polaroid" style="--rotation: 7deg; --delay: 0.8s; --z: 5; --brightness: 0.75;">
             <div class="polaroid__frame">
-              <img src="assets/memory-4.svg" alt="Memory 4" />
+              <img src="assets/memory-4.svg" alt="Memory 4" loading="lazy" />
             </div>
             <p class="polaroid__caption">Laughing Till It Hurts 😂</p>
           </div>
         </div>
         <div class="gallery-nav">
-          <button class="btn btn--nav" id="prev-memory" aria-label="Previous memory">‹</button>
-          <button class="btn btn--nav" id="next-memory" aria-label="Next memory">›</button>
+          <button class="btn btn--nav" id="prev-memory" aria-label="Previous memory">
+            ‹
+          </button>
+          <button class="btn btn--nav" id="next-memory" aria-label="Next memory">
+            ›
+          </button>
         </div>
         <button class="btn btn--ghost" id="next-btn-4" aria-label="Continue to letter">
           Continue
@@ -116,17 +135,17 @@
         <div class="letter-container">
           <div class="letter" id="letter">
             <div class="letter__content" id="letter-content">
-              <p class="letter__line" data-line="1">My dearest Trijal,</p>
+              <p class="letter__line letter__line--dropcap" data-line="1">My dearest Trijal,</p>
               <p class="letter__line" data-line="2">Every moment with you feels like a beautiful dream.</p>
-              <p class="letter__line" data-line="3">Your smile lights up even the darkest of days.</p>
+              <p class="letter__line flourish" data-line="3">✿ Your smile lights up even the darkest of days.</p>
               <p class="letter__line" data-line="4">The way you laugh is my favorite sound in the world.</p>
-              <p class="letter__line" data-line="5">You have this incredible ability to make everyone around you feel loved.</p>
+              <p class="letter__line flourish" data-line="5">✿ You have this incredible ability to make everyone around you feel loved.</p>
               <p class="letter__line" data-line="6">Watching you grow, achieve, and shine has been my greatest joy.</p>
-              <p class="letter__line" data-line="7">On this special day, I want you to know that you are deeply cherished.</p>
+              <p class="letter__line flourish" data-line="7">✿ On this special day, I want you to know that you are deeply cherished.</p>
               <p class="letter__line" data-line="8">May this year bring you all the happiness your heart desires.</p>
-              <p class="letter__line" data-line="9">May your dreams come true and your soul always find peace.</p>
+              <p class="letter__line flourish" data-line="9">✿ May your dreams come true and your soul always find peace.</p>
               <p class="letter__line" data-line="10">Happy Birthday, my love. I'm so proud of you.</p>
-              <p class="letter__line" data-line="11">With all my love, always.</p>
+              <p class="letter__line flourish" data-line="11">✿ With all my love, always.</p>
             </div>
             <div class="letter__seal" id="letter-seal"></div>
           </div>
@@ -213,11 +232,12 @@
     <!-- Final Screen -->
     <section id="final" class="scene">
       <div class="scene-bg scene-bg--end"></div>
+      <div class="light-rays" id="light-rays"></div>
       <div class="scene-content">
         <div class="final-message">
           <h1 class="final-message__title">Happy Birthday ❤️</h1>
           <p class="final-message__subtitle">You deserve all the happiness in the world.</p>
-          <div class="final-message__heart" id="final-heart"></div>
+          <div class="final-message__heart" id="final-heart">❤️</div>
         </div>
         <div class="audio-controls">
           <button class="btn btn--audio" id="music-toggle" aria-label="Toggle music">
