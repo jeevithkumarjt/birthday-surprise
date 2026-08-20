@@ -97,8 +97,9 @@ class SceneManager {
     scenes.forEach(({ btn, to }) => {
       const el = document.getElementById(btn);
       if (el) {
-        el.addEventListener('click', () => {
-          Animations.createParticleBurst(el, '#ff6ec4', 8, null);
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          try { Animations.createParticleBurst(el, '#ff6ec4', 8, null); } catch (err) {}
           if (window.audioSystem) window.audioSystem.playClick();
           this.goToScene(to);
         });
@@ -148,6 +149,10 @@ class SceneManager {
 
   /* Cinematic scene transition */
   goToScene(sceneNum) {
+    /* Prevent re-entry during transition */
+    if (this._transitioning) return;
+    this._transitioning = true;
+
     const fromScene = document.querySelector('.scene--active');
     if (fromScene) {
       fromScene.classList.remove('scene--active');
@@ -193,7 +198,10 @@ class SceneManager {
         /* Trigger scene-specific entrance animations AFTER scene is fully visible */
         setTimeout(() => {
           this.triggerSceneAnimations(sceneNum);
+          this._transitioning = false;
         }, 600);
+      } else {
+        this._transitioning = false;
       }
     }, fromScene ? 200 : 0);
   }
@@ -1111,6 +1119,8 @@ class SceneManager {
         this.gsap.set(giftBox, { clear: true });
       }
     }
+
+    this._transitioning = false;
 
     /* Reset to scene 1 */
     this.currentScene = 1;
