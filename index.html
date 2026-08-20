@@ -9,26 +9,53 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script defer src="src/gestures.js"></script>
+  <script defer src="src/audio.js"></script>
+  <script defer src="src/animations.js"></script>
+  <script defer src="src/scenes.js"></script>
+  <script defer src="src/main.js"></script>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:,">
 </head>
+
 <body>
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+      </div>
+      <p class="loading-text">Creating your surprise...</p>
+    </div>
+    <div class="loading-progress" id="loading-progress"></div>
+  </div>
+
+  <div class="grain-overlay"></div>
+
+  <div class="decorative-corner top-left"></div>
+  <div class="decorative-corner top-right"></div>
+  <div class="decorative-corner bottom-left"></div>
+  <div class="decorative-corner bottom-right"></div>
+
   <div class="app">
-    <!-- Ambient particle backgrounds -->
-    <div class="ambient-particles" id="ambient-1"></div>
-    <div class="ambient-particles" id="ambient-2"></div>
-    <div class="ambient-particles" id="ambient-3"></div>
-    <div class="ambient-particles" id="ambient-4"></div>
-    <div class="ambient-particles" id="ambient-5"></div>
-    <div class="ambient-particles" id="ambient-6"></div>
-    <div class="ambient-particles" id="ambient-7"></div>
-    <div class="ambient-particles" id="ambient-final"></div>
+    <!-- Ambient particle layers -->
+    <div class="ambient-layer" id="ambient-1"></div>
+    <div class="ambient-layer" id="ambient-2"></div>
+    <div class="ambient-layer" id="ambient-3"></div>
+    <div class="ambient-layer" id="ambient-4"></div>
+    <div class="ambient-layer" id="ambient-5"></div>
+    <div class="ambient-layer" id="ambient-6"></div>
+    <div class="ambient-layer" id="ambient-7"></div>
+    <div class="ambient-layer" id="ambient-final"></div>
 
     <!-- Scene 1: Locked Surprise -->
     <section id="scene-1" class="scene scene--active">
       <div class="scene-bg scene-bg--subtle"></div>
       <div class="scene-content">
-        <div class="envelope-wrapper">
+        <div class="envelope-wrapper" data-parallax>
           <div class="envelope" id="envelope">
             <div class="envelope__flap"></div>
             <div class="envelope__body">
@@ -39,11 +66,12 @@
           </div>
           <div class="envelope-shadow"></div>
         </div>
-        <div class="intro-text">
-          <p class="stagger-text">Someone has a little surprise for you…</p>
+        <div class="intro-text stagger-text" data-stagger>
+          <p>Someone has a little surprise for you…</p>
         </div>
-        <button class="btn btn--primary pulse-ring" id="open-envelope-btn" aria-label="Open the envelope">
-          Tap to Open
+        <button class="btn btn--primary" id="open-envelope-btn" aria-label="Open the envelope">
+          <span>Tap to Open</span>
+          <div class="btn__glow"></div>
         </button>
       </div>
     </section>
@@ -55,11 +83,17 @@
         <div class="balloons" id="balloons"></div>
         <div class="particles" id="particles"></div>
         <div class="reveal-text">
-          <h1 class="reveal-text__title">Happy Birthday, Trijal! 🎂</h1>
-          <p class="reveal-text__subtitle">May your year be sparkling</p>
+          <h1 class="reveal-text__title gradient-text" data-splitting>
+            <span class="title-line">Happy Birthday,</span>
+            <span class="title-line name-highlight">Trijal! 🎂</span>
+          </h1>
+          <p class="reveal-text__subtitle" data-stagger>
+            May your year be sparkling
+          </p>
         </div>
         <button class="btn btn--ghost" id="next-btn-2" aria-label="Continue to cake">
-          Continue
+          <span>Continue</span>
+          <div class="btn__glow"></div>
         </button>
       </div>
     </section>
@@ -68,17 +102,17 @@
     <section id="scene-3" class="scene">
       <div class="scene-bg scene-bg--cake"></div>
       <div class="scene-content">
-        <div class="cake-glow"></div>
-        <div class="cake-container" id="cake-container">
+        <div class="cake-glow" id="cake-glow"></div>
+        <div class="cake-container" id="cake-container" data-tilt>
           <canvas class="cake-canvas" id="cake-canvas" width="400" height="400"></canvas>
           <div class="cake-base"></div>
         </div>
-        <div class="candle-hint">
+        <div class="candle-hint stagger-text" data-stagger>
           <p>Tap the candles or press and hold to blow them out</p>
         </div>
-        <div class="confetti" id="confetti"></div>
         <button class="btn btn--ghost" id="next-btn-3" aria-label="Continue to memories">
-          Continue
+          <span>Continue</span>
+          <div class="btn__glow"></div>
         </button>
       </div>
     </section>
@@ -87,7 +121,7 @@
     <section id="scene-4" class="scene">
       <div class="scene-bg scene-bg--memories"></div>
       <div class="scene-content">
-        <h2 class="gallery-title">Memory Gallery</h2>
+        <h2 class="gallery-title" data-stagger>Memory Gallery</h2>
         <div class="polaroid-stack" id="polaroid-stack">
           <div class="polaroid" style="--rotation: -8deg; --delay: 0.2s; --z: 20; --brightness: 0.9;">
             <div class="polaroid__frame">
@@ -123,7 +157,8 @@
           </button>
         </div>
         <button class="btn btn--ghost" id="next-btn-4" aria-label="Continue to letter">
-          Continue
+          <span>Continue</span>
+          <div class="btn__glow"></div>
         </button>
       </div>
     </section>
@@ -134,6 +169,7 @@
       <div class="scene-content">
         <div class="letter-container">
           <div class="letter" id="letter">
+            <div class="letter__seal" id="letter-seal"></div>
             <div class="letter__content" id="letter-content">
               <p class="letter__line letter__line--dropcap" data-line="1">My dearest Trijal,</p>
               <p class="letter__line" data-line="2">Every moment with you feels like a beautiful dream.</p>
@@ -147,11 +183,11 @@
               <p class="letter__line" data-line="10">Happy Birthday, my love. I'm so proud of you.</p>
               <p class="letter__line flourish" data-line="11">✿ With all my love, always.</p>
             </div>
-            <div class="letter__seal" id="letter-seal"></div>
           </div>
         </div>
         <button class="btn btn--ghost" id="next-btn-5" aria-label="Continue to timeline">
-          Continue
+          <span>Continue</span>
+          <div class="btn__glow"></div>
         </button>
       </div>
     </section>
@@ -160,7 +196,7 @@
     <section id="scene-6" class="scene">
       <div class="scene-bg scene-bg--timeline"></div>
       <div class="scene-content">
-        <h2 class="timeline-title">Our Journey</h2>
+        <h2 class="timeline-title" data-stagger>Our Journey</h2>
         <div class="timeline" id="timeline">
           <div class="timeline-item" style="--index: 0; --delay: 0.2s;">
             <div class="timeline__marker">📅</div>
@@ -206,7 +242,8 @@
           </div>
         </div>
         <button class="btn btn--ghost" id="next-btn-6" aria-label="Continue to final surprise">
-          Continue
+          <span>Continue</span>
+          <div class="btn__glow"></div>
         </button>
       </div>
     </section>
@@ -215,7 +252,7 @@
     <section id="scene-7" class="scene">
       <div class="scene-bg scene-bg--final"></div>
       <div class="scene-content">
-        <div class="gift-box" id="gift-box">
+        <div class="gift-box" id="gift-box" data-tilt>
           <div class="gift-box__lid"></div>
           <div class="gift-box__body">
             <div class="gift-box__ribbon"></div>
@@ -223,7 +260,7 @@
           </div>
         </div>
         <div class="fireworks" id="fireworks"></div>
-        <div class="final-hint">
+        <div class="final-hint stagger-text" data-stagger>
           <p>Tap the gift to reveal the final surprise</p>
         </div>
       </div>
@@ -234,32 +271,36 @@
       <div class="scene-bg scene-bg--end"></div>
       <div class="light-rays" id="light-rays"></div>
       <div class="scene-content">
-        <div class="final-message">
-          <h1 class="final-message__title">Happy Birthday ❤️</h1>
+        <div class="final-message" data-stagger>
+          <h1 class="final-message__title gradient-text" id="final-title">
+            <span class="title-line">Happy Birthday</span>
+            <span class="title-line heart-pulse">❤️</span>
+          </h1>
           <p class="final-message__subtitle">You deserve all the happiness in the world.</p>
-          <div class="final-message__heart" id="final-heart">❤️</div>
+          <div class="final-message__heart" id="final-heart">
+            <span class="floating-heart">💖</span>
+            <span class="floating-heart">🌸</span>
+            <span class="floating-heart">✨</span>
+          </div>
         </div>
         <div class="audio-controls">
           <button class="btn btn--audio" id="music-toggle" aria-label="Toggle music">
             <span class="music-icon">🎵</span>
             <span class="music-label">Music: On</span>
+            <div class="btn__glow"></div>
           </button>
         </div>
         <button class="btn btn--restart" id="restart-btn" aria-label="Restart the experience">
-          Replay Experience
+          <span>Replay Experience</span>
+          <div class="btn__glow"></div>
         </button>
       </div>
     </section>
 
     <!-- Shared UI -->
     <div class="progress-bar" id="progress-bar"></div>
-    <div class="reduced-motion-fallback" aria-live="polite"></div>
   </div>
 
-  <script src="src/audio.js"></script>
-  <script src="src/animations.js"></script>
-  <script src="src/gestures.js"></script>
-  <script src="src/scenes.js"></script>
-  <script src="src/main.js"></script>
+  <div class="cursor-glow" id="cursor-glow"></div>
 </body>
 </html>
