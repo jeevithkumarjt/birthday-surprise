@@ -23,42 +23,7 @@ class SceneManager {
     }
 
     this.bindNavigation();
-    this.initLoadingScreen();
     this.setupButtonEffects();
-  }
-
-  initLoadingScreen() {
-    const loadingText = this.loadingScreen?.querySelector('.loading-text');
-    const loadingProgress = this.loadingScreen?.querySelector('.loading-progress');
-
-    if (!this.loadingScreen) return;
-
-    const messages = ['Creating magic...', 'Polishing the details...', 'Almost there...'];
-    let msgIndex = 0;
-
-    const msgInterval = setInterval(() => {
-      if (loadingText) {
-        loadingText.textContent = messages[msgIndex % messages.length];
-        msgIndex++;
-      }
-    }, 800);
-
-    setTimeout(() => {
-      if (this.gsap) {
-        this.gsap.to(this.loadingScreen, {
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power2.inOut',
-          onComplete: () => {
-            this.loadingScreen.style.display = 'none';
-          }
-        });
-      } else {
-        this.loadingScreen.style.opacity = '0';
-        setTimeout(() => { this.loadingScreen.style.display = 'none'; }, 800);
-      }
-      clearInterval(msgInterval);
-    }, 2500);
   }
 
   setupButtonEffects() {
@@ -202,13 +167,15 @@ class SceneManager {
         window._cakeAnimationCleanup = null;
         canvas.dataset.initialized = 'false';
       }
+
+      /* Remove exiting class after transition completes */
+      setTimeout(() => {
+        fromScene.classList.remove('scene--exiting');
+      }, 850);
     }
 
+    /* Wait for exit transition, then activate new scene */
     setTimeout(() => {
-      if (fromScene) {
-        fromScene.classList.remove('scene--exiting');
-      }
-
       const targetScene = typeof sceneNum === 'number'
         ? document.getElementById(`scene-${sceneNum}`)
         : document.getElementById(sceneNum);
@@ -218,17 +185,17 @@ class SceneManager {
         this.currentScene = typeof sceneNum === 'number' ? sceneNum : this.totalScenes + 1;
         this.updateProgress();
 
-        /* Spawn ambient particles for the new scene */
+        /* Spawn ambient particles after scene is visible */
         setTimeout(() => {
           this.spawnAmbientParticles(targetScene.id);
-        }, 300);
+        }, 400);
 
-        /* Trigger scene-specific entrance animations */
+        /* Trigger scene-specific entrance animations AFTER scene is fully visible */
         setTimeout(() => {
           this.triggerSceneAnimations(sceneNum);
-        }, 400);
+        }, 600);
       }
-    }, 900);
+    }, fromScene ? 200 : 0);
   }
 
   spawnAmbientParticles(sceneId) {
@@ -1095,12 +1062,15 @@ class SceneManager {
       }
 
       /* Clean up generated elements */
-      scene.element.querySelectorAll('.particle, .balloon, .smoke-wisp, .ambient-particle, .firework, .light-ray, .confetti-piece, .sparkle, .screen-flash').forEach(el => el.remove());
+      scene.element.querySelectorAll('.particle, .balloon, .smoke-wisp, .ambient-particle, .firework, .light-ray, .confetti-piece, .confetti-rain, .sparkle, .screen-flash').forEach(el => el.remove());
 
       /* Clear ambient containers */
       const ambient = scene.element.closest('.app')?.querySelector(`#ambient-${scene.element.id}`);
       if (ambient) ambient.innerHTML = '';
     });
+
+    /* Clean up body-level elements (confetti rain, screen flash) */
+    document.body.querySelectorAll('.confetti-rain, .confetti-piece, .screen-flash').forEach(el => el.remove());
 
     /* Reset all states */
     const letter = document.getElementById('letter');

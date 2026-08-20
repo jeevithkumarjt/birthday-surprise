@@ -102,7 +102,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 100;
+  z-index: 15;
   background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-opacity='0.04'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-75c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57 13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.115 0 2.16-.303 3.035-.83a4.985 4.985 0 0 0-.82-1.817c-.105-.16-.21-.314-.316-.455A3.988 3.988 0 0 0 82 51c0 2.21-.379 4.305-1.086 6.255-.016.05-.034.1-.045.15A5.001 5.001 0 0 0 82 51c0-1.023-.16-2.004-.417-2.922a5.988 5.988 0 0 0-1.85-.318c-.032-.01-.065-.017-.097-.026A5.988 5.988 0 0 0 75 55c0 2.76-2.24 5-5 5s-5-2.24-5-5 2.24-5 5-5c.094 0 .187.006.28.018a5.988 5.988 0 0 0-.026 0c-1.28 2.72-2.02 5.753-2.02 8.922 0 4.418 1.67 8.655 4.465 11.816.01.01.02.02.03.03.01.01.02.01.03.03.01.01.02.02.02.03a5.986 5.986 0 0 0 1.738 1.275A7.97 7.97 0 0 0 82 69c0 4.418 2.55 8.28 6.19 10.09a7.97 7.97 0 0 0 6.92 2.78c4.418 0 8.28-2.55 10.09-6.19a7.987 7.987 0 0 0 .71-1.754c.008-.02.017-.04.024-.058a7.987 7.987 0 0 0 1.754-.71c1.81-1.81 2.88-4.23 3.06-6.93a5.988 5.988 0 0 0 1.098-4.626c.01-.064.018-.129.027-.194.01-.07.018-.14.027-.21.008-.07.016-.14.024-.21a.94.94 0 0 0-.926-.97c-.042 0-.084.003-.126.008A5.988 5.988 0 0 0 82 46c-.02 0-.04-.002-.06-.003-.034-.011-.068-.025-.102-.036a5.988 5.988 0 0 0-1.392-.314l-.001-.002c-.04-.012-.081-.02-.122-.031a5.988 5.988 0 0 0-6.34-.957c-.02.006-.04.013-.059.02-.017.008-.034.017-.053.025a5.988 5.988 0 0 0-1.699 1.1c-.043.037-.084.075-.126.114A5.988 5.988 0 0 0 67 56c0 .01 0 .01-.002.018-.004.034-.006.069-.006.104a5.988 5.988 0 0 0 .204 1.445c.024.08.053.158.086.237a5.988 5.988 0 0 0 .536 1.028c.036.052.077.101.12.15.017.02.035.04.053.058.023.022.048.04.073.06.023.018.048.033.074.047a5.988 5.988 0 0 0 3.82 1.338c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-6 18c0 2.21-.389 4.305-1.085 6.255-.017.05-.035.1-.052.152A5.988 5.988 0 0 1 70 79c0 2.76-2.24 5-5 5s-5-2.24-5-5c0-1.03-.163-2.01-.42-2.924a5.988 5.988 0 0 1-1.848-.316c-.03-.01-.06-.023-.09-.037a5.988 5.988 0 0 1-.682-3.355c-.008-.06-.014-1-.014-2.65 0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.05-.166 2.03-.435 2.945.02.01.04.018.06.03a5.988 5.988 0 0 1 1.415.824 5.988 5.988 0 0 1 2.4 4.28c0 .01.002.02.002.03z' fill='%23000' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/g%3E%3C/svg%3E");
   opacity: 0.25;
   pointer-events: none;
@@ -242,23 +242,22 @@ body {
   height: 100vh;
   overflow: hidden;
   opacity: 0;
-  visibility: hidden;
-  transform: scale(1.05) blur(4px);
-  transition: opacity 700ms var(--transition-smooth),
-              visibility 700ms var(--transition-smooth),
-              transform 700ms var(--transition-smooth),
-              filter 700ms var(--transition-smooth);
+  pointer-events: none;
+  transform: scale(1.06) blur(6px);
+  transition: opacity 800ms var(--transition-smooth),
+              transform 800ms var(--transition-smooth);
+  will-change: opacity, transform;
 }
 .scene--active {
   opacity: 1;
-  visibility: visible;
+  pointer-events: auto;
   transform: scale(1) blur(0);
-  filter: blur(0);
+  z-index: 10;
 }
 .scene--exiting {
   opacity: 0;
-  visibility: hidden;
-  transform: scale(1.05) blur(4px);
+  transform: scale(0.95) blur(8px);
+  z-index: 5;
 }
 .scene-bg {
   position: absolute;
@@ -333,6 +332,7 @@ body {
   position: fixed;
   bottom: 0;
   left: 0;
+  width: 100%;
   height: 4px;
   background: var(--gradient-primary);
   transform-origin: 0 0;
@@ -776,7 +776,7 @@ body {
   position: relative;
   z-index: 3;
   max-width: 600px;
-  width: 100%;;
+  width: 100%;
   padding: var(--space-3xl);
 }
 .letter {
@@ -1164,7 +1164,7 @@ body {
   background: radial-gradient(circle, rgba(255, 110, 196, 0.15) 0%, transparent 70%);
   filter: blur(40px);
   pointer-events: none;
-  z-index: 999;
+  z-index: 150;
   opacity: 0;
   transform: translate(-50%, -50%);
   transition: opacity 0.3s ease;
@@ -1296,6 +1296,16 @@ body {
   z-index: 100;
   animation: confettiFall 2.5s ease-in forwards;
   opacity: 0;
+}
+.confetti-rain {
+  position: fixed;
+  width: 8px;
+  height: 12px;
+  background: var(--color, var(--color-primary));
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.8;
 }
 @keyframes confettiFall {
   0% {

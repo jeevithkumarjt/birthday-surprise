@@ -29,12 +29,15 @@ class AnimationSystem {
       Object.assign(element.style, props);
       return Promise.resolve();
     }
-    return this.gsap.to(element, {
-      ...props,
-      duration,
-      ease,
-      delay
-    }).then ? Promise.resolve() : Promise.resolve();
+    return new Promise(resolve => {
+      this.gsap.to(element, {
+        ...props,
+        duration,
+        ease,
+        delay,
+        onComplete: resolve
+      });
+    });
   }
 
   /* Staggered fade+slide-in of children */
@@ -105,12 +108,15 @@ class AnimationSystem {
     const text = element.textContent.trim();
     element.innerHTML = text.split('').map(c => `<span class="split-char">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
     if (this.gsap) {
-      return this.gsap.from('.split-char', {
-        opacity: 0,
-        y: 10,
-        stagger: speed,
-        ease: 'none'
-      }).then ? Promise.resolve() : Promise.resolve();
+      return new Promise(resolve => {
+        this.gsap.from('.split-char', {
+          opacity: 0,
+          y: 10,
+          stagger: speed,
+          ease: 'none',
+          onComplete: resolve
+        });
+      });
     }
     return Promise.resolve();
   }
@@ -286,7 +292,7 @@ class AnimationSystem {
       position: fixed;
       inset: 0;
       background: ${color};
-      z-index: 9999;
+      z-index: 160;
       pointer-events: none;
       opacity: 0;
     `;
@@ -329,7 +335,7 @@ class AnimationSystem {
     const colors = ['#ff6ec4', '#ffd7a0', '#4e9eff', '#39e683', '#fff7', '#ff8a65', '#d4af37'];
 
     const createPiece = () => {
-      const confetti = this.createElement('div', 'confetti-piece');
+      const confetti = this.createElement('div', 'confetti-rain');
       confetti.style.left = `${5 + Math.random() * 90}%`;
       confetti.style.top = '-30px';
       confetti.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
@@ -468,12 +474,15 @@ class AnimationSystem {
     }
     element.style.opacity = '0';
     element.style.display = '';
-    return this.gsap.to(element, {
-      opacity: 1,
-      duration: duration,
-      delay: delay,
-      ease: 'power2.out'
-    }).then ? Promise.resolve() : Promise.resolve();
+    return new Promise(resolve => {
+      this.gsap.to(element, {
+        opacity: 1,
+        duration: duration,
+        delay: delay,
+        ease: 'power2.out',
+        onComplete: resolve
+      });
+    });
   }
 
   /* Fade out */
@@ -482,12 +491,15 @@ class AnimationSystem {
       element.style.opacity = '0';
       return Promise.resolve();
     }
-    return this.gsap.to(element, {
-      opacity: 0,
-      duration: duration,
-      delay: delay,
-      ease: 'power2.in'
-    }).then ? Promise.resolve() : Promise.resolve();
+    return new Promise(resolve => {
+      this.gsap.to(element, {
+        opacity: 0,
+        duration: duration,
+        delay: delay,
+        ease: 'power2.in',
+        onComplete: resolve
+      });
+    });
   }
 }
 
