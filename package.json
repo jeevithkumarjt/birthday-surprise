@@ -1,0 +1,19 @@
+{
+  "name": "birthday-surprise-website",
+  "version": "1.0.0",
+  "description": "An interactive cinematic birthday surprise website with 8 animated scenes",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --check src/audio.js && node --check src/animations.js && node --check src/gestures.js && node --check src/scenes.js && node --check src/main.js && node --check server.js && echo 'All syntax checks passed'"
+  },
+  "keywords": [
+    "birthday",
+    "interactive",
+    "animation",
+    "canvas",
+    "web-audio"
+  ],
+  "license": "MIT",
+  "private": true
+}

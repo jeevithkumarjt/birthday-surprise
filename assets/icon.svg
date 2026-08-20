@@ -1,0 +1,15 @@
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6ec4"/>
+      <stop offset="100%" stop-color="#ffd700"/>
+    </linearGradient>
+  </defs>
+  <circle cx="96" cy="96" r="88" fill="url(#iconGrad)"/>
+  <path d="M96 40 C70 40 50 60 50 86 C50 112 70 132 96 132 C122 132 142 112 142 86 C142 60 122 40 96 40 Z" fill="#fff" opacity="0.9"/>
+  <circle cx="96" cy="76" r="10" fill="#ffd700"/>
+  <path d="M96 76 Q102 82 106 76" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M90 115 C90 115 80 125 96 125 C112 125 102 115 102 115" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <rect x="68" y="105" width="56" height="14" rx="7" fill="#fff"/>
+  <text x="96" y="155" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="20" font-weight="bold">🎂</text>
+</svg>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="An interactive birthday surprise experience" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Happy Birthday</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <div class="app">
+    <!-- Scene 1: Locked Surprise -->
+    <section id="scene-1" class="scene scene--active">
+      <div class="scene-bg scene-bg--subtle"></div>
+      <div class="scene-content">
+        <div class="envelope-wrapper">
+          <div class="envelope" id="envelope">
+            <div class="envelope__flap"></div>
+            <div class="envelope__body">
+              <div class="envelope__seal"></div>
+              <p class="envelope__hint">Tap to open</p>
+            </div>
+          </div>
+          <div class="envelope-shadow"></div>
+        </div>
+        <div class="intro-text">
+          <p>Someone has a little surprise for you…</p>
+        </div>
+        <button class="btn btn--primary" id="open-envelope-btn" aria-label="Open the envelope">
+          Tap to Open
+        </button>
+      </div>
+    </section>
+
+    <!-- Scene 2: Birthday Reveal -->
+    <section id="scene-2" class="scene">
+      <div class="scene-bg scene-bg--celebration"></div>
+      <div class="scene-content">
+        <div class="balloons" id="balloons"></div>
+        <div class="particles" id="particles"></div>
+        <div class="reveal-text">
+          <h1 class="reveal-text__title">Happy Birthday, Trijal! 🎂</h1>
+          <p class="reveal-text__subtitle">May your year be sparkling</p>
+        </div>
+        <button class="btn btn--ghost" id="next-btn-2" aria-label="Continue to cake">
+          Continue
+        </button>
+      </div>
+    </section>
+
+    <!-- Scene 3: Interactive Cake -->
+    <section id="scene-3" class="scene">
+      <div class="scene-bg scene-bg--cake"></div>
+      <div class="scene-content">
+        <div class="cake-container" id="cake-container">
+          <canvas class="cake-canvas" id="cake-canvas" width="400" height="400"></canvas>
+          <div class="cake-base"></div>
+        </div>
+        <div class="candle-hint">
+          <p>Tap the candles or press and hold to blow them out</p>
+        </div>
+        <div class="confetti" id="confetti"></div>
+        <button class="btn btn--ghost" id="next-btn-3" aria-label="Continue to memories">
+          Continue
+        </button>
+      </div>
+    </section>
+
+    <!-- Scene 4: Memory Gallery -->
+    <section id="scene-4" class="scene">
+      <div class="scene-bg scene-bg--memories"></div>
+      <div class="scene-content">
+        <h2 class="gallery-title">Memory Gallery</h2>
+        <div class="polaroid-stack" id="polaroid-stack">
+          <div class="polaroid" style="--rotation: -8deg; --delay: 0.2s;">
+            <div class="polaroid__frame">
+              <img src="assets/memory-1.svg" alt="Memory 1" />
+            </div>
+            <p class="polaroid__caption">First Coffee Together ☕</p>
+          </div>
+          <div class="polaroid" style="--rotation: 5deg; --delay: 0.4s;">
+            <div class="polaroid__frame">
+              <img src="assets/memory-2.svg" alt="Memory 2" />
+            </div>
+            <p class="polaroid__caption">Weekend Getaway 🚗</p>
+          </div>
+          <div class="polaroid" style="--rotation: -4deg; --delay: 0.6s;">
+            <div class="polaroid__frame">
+              <img src="assets/memory-3.svg" alt="Memory 3" />
+            </div>
+            <p class="polaroid__caption">Late Night Chats 🌙</p>
+          </div>
+          <div class="polaroid" style="--rotation: 7deg; --delay: 0.8s;">
+            <div class="polaroid__frame">
+              <img src="assets/memory-4.svg" alt="Memory 4" />
+            </div>
+            <p class="polaroid__caption">Laughing Till It Hurts 😂</p>
+          </div>
+        </div>
+        <div class="gallery-nav">
+          <button class="btn btn--nav" id="prev-memory" aria-label="Previous memory">‹</button>
+          <button class="btn btn--nav" id="next-memory" aria-label="Next memory">›</button>
+        </div>
+        <button class="btn btn--ghost" id="next-btn-4" aria-label="Continue to letter">
+          Continue
+        </button>
+      </div>
+    </section>
+
+    <!-- Scene 5: Personal Letter -->
+    <section id="scene-5" class="scene">
+      <div class="scene-bg scene-bg--letter"></div>
+      <div class="scene-content">
+        <div class="letter-container">
+          <div class="letter" id="letter">
+            <div class="letter__content" id="letter-content">
+              <p class="letter__line" data-line="1">My dearest Trijal,</p>
+              <p class="letter__line" data-line="2">Every moment with you feels like a beautiful dream.</p>
+              <p class="letter__line" data-line="3">Your smile lights up even the darkest of days.</p>
+              <p class="letter__line" data-line="4">The way you laugh is my favorite sound in the world.</p>
+              <p class="letter__line" data-line="5">You have this incredible ability to make everyone around you feel loved.</p>
+              <p class="letter__line" data-line="6">Watching you grow, achieve, and shine has been my greatest joy.</p>
+              <p class="letter__line" data-line="7">On this special day, I want you to know that you are deeply cherished.</p>
+              <p class="letter__line" data-line="8">May this year bring you all the happiness your heart desires.</p>
+              <p class="letter__line" data-line="9">May your dreams come true and your soul always find peace.</p>
+              <p class="letter__line" data-line="10">Happy Birthday, my love. I'm so proud of you.</p>
+              <p class="letter__line" data-line="11">With all my love, always.</p>
+            </div>
+            <div class="letter__seal" id="letter-seal"></div>
+          </div>
+        </div>
+        <button class="btn btn--ghost" id="next-btn-5" aria-label="Continue to timeline">
+          Continue
+        </button>
+      </div>
+    </section>
+
+    <!-- Scene 6: Timeline -->
+    <section id="scene-6" class="scene">
+      <div class="scene-bg scene-bg--timeline"></div>
+      <div class="scene-content">
+        <h2 class="timeline-title">Our Journey</h2>
+        <div class="timeline" id="timeline">
+          <div class="timeline-item" style="--index: 0; --delay: 0.2s;">
+            <div class="timeline__marker">📅</div>
+            <div class="timeline__content">
+              <time class="timeline__date">January 2023</time>
+              <p class="timeline__text">We first met — everything changed in an instant.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="--index: 1; --delay: 0.4s;">
+            <div class="timeline__marker">☕</div>
+            <div class="timeline__content">
+              <time class="timeline__date">March 2023</time>
+              <p class="timeline__text">Our first coffee date that lasted 4 hours.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="--index: 2; --delay: 0.6s;">
+            <div class="timeline__marker">🎵</div>
+            <div class="timeline__content">
+              <time class="timeline__date">June 2023</time>
+              <p class="timeline__text">Concert night — dancing in the rain.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="--index: 3; --delay: 0.8s;">
+            <div class="timeline__marker">✈️</div>
+            <div class="timeline__content">
+              <time class="timeline__date">September 2023</time>
+              <p class="timeline__text">Road trip to the mountains.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="--index: 4; --delay: 1.0s;">
+            <div class="timeline__marker">📚</div>
+            <div class="timeline__content">
+              <time class="timeline__date">December 2023</time>
+              <p class="timeline__text">Finished the project you poured your heart into.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="--index: 5; --delay: 1.2s;">
+            <div class="timeline__marker">🎯</div>
+            <div class="timeline__content">
+              <time class="timeline__date">Today</time>
+              <p class="timeline__text">Another year of amazing adventures ahead.</p>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn--ghost" id="next-btn-6" aria-label="Continue to final surprise">
+          Continue
+        </button>
+      </div>
+    </section>
+
+    <!-- Scene 7: Final Surprise -->
+    <section id="scene-7" class="scene">
+      <div class="scene-bg scene-bg--final"></div>
+      <div class="scene-content">
+        <div class="gift-box" id="gift-box">
+          <div class="gift-box__lid"></div>
+          <div class="gift-box__body">
+            <div class="gift-box__ribbon"></div>
+            <div class="gift-box__bow"></div>
+          </div>
+        </div>
+        <div class="fireworks" id="fireworks"></div>
+        <div class="final-hint">
+          <p>Tap the gift to reveal the final surprise</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Screen -->
+    <section id="final" class="scene">
+      <div class="scene-bg scene-bg--end"></div>
+      <div class="scene-content">
+        <div class="final-message">
+          <h1 class="final-message__title">Happy Birthday ❤️</h1>
+          <p class="final-message__subtitle">You deserve all the happiness in the world.</p>
+          <div class="final-message__heart" id="final-heart"></div>
+        </div>
+        <div class="audio-controls">
+          <button class="btn btn--audio" id="music-toggle" aria-label="Toggle music">
+            <span class="music-icon">🎵</span>
+            <span class="music-label">Music: On</span>
+          </button>
+        </div>
+        <button class="btn btn--restart" id="restart-btn" aria-label="Restart the experience">
+          Replay Experience
+        </button>
+      </div>
+    </section>
+
+    <!-- Shared UI -->
+    <div class="progress-bar" id="progress-bar"></div>
+    <div class="reduced-motion-fallback" aria-live="polite"></div>
+  </div>
+
+  <script src="src/audio.js"></script>
+  <script src="src/animations.js"></script>
+  <script src="src/gestures.js"></script>
+  <script src="src/scenes.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>

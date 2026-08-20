@@ -1,0 +1,21 @@
+{
+  "name": "Birthday Surprise",
+  "short_name": "Birthday",
+  "description": "An interactive birthday surprise experience",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0a0a1a",
+  "background_color": "#0a0a1a",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "assets/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
