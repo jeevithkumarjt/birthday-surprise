@@ -207,9 +207,16 @@ function createSparkles(container, count) {
 // ============================================
 // SCENE TRANSITION
 // ============================================
+let isTransitioning = false;
+
 function goToScene(sceneNum) {
+    if (isTransitioning) return;
+    if (String(currentScene) === String(sceneNum)) return;
     const current = document.getElementById('scene' + currentScene);
     const next = document.getElementById('scene' + sceneNum);
+    if (!current || !next) return;
+
+    isTransitioning = true;
 
     gsap.to(current, {
         opacity: 0,
@@ -231,13 +238,17 @@ function goToScene(sceneNum) {
                     onComplete: () => {
                         next.classList.remove('scene-transition');
                         initScene(sceneNum);
+                        isTransitioning = false;
                     }
                 }
             );
         }
     });
-
+    
     currentScene = sceneNum;
+
+    // Safety: ensure transition lock is released even if animation callbacks fail
+    setTimeout(() => { isTransitioning = false; }, 2000);
 }
 
 function initScene(num) {
@@ -282,7 +293,7 @@ function initScene1() {
 
     const openBtn = document.getElementById('openEnvelope');
 
-    openBtn.addEventListener('click', () => {
+    openBtn.onclick = () => {
         openBtn.style.display = 'none';
 
         // Open envelope flap
@@ -306,7 +317,7 @@ function initScene1() {
         setTimeout(() => {
             goToScene(2);
         }, 2500);
-    });
+    };
 
     // Animate envelope entrance
     gsap.from('.envelope-container', {
@@ -370,7 +381,7 @@ function initScene2() {
 
     // Click any balloon -> blast ALL balloons smoothly
     let blasted = false;
-    container.addEventListener('click', (e) => {
+    container.onclick = (e) => {
         const balloon = e.target.closest('.balloon');
         if (!balloon || blasted) return;
         blasted = true;
@@ -398,7 +409,7 @@ function initScene2() {
         }, allBalloons.length * 60 + 200);
 
         setTimeout(() => goToScene(3), allBalloons.length * 60 + 1000);
-    });
+    };
 
     // Create sparkles
     const sparklesBg = document.getElementById('sparklesBg2');
@@ -452,9 +463,9 @@ function initScene3() {
         }, 1500);
     };
 
-    if (candle) candle.addEventListener('click', blowOutCandle);
+    if (candle) candle.onclick = blowOutCandle;
 
-    nextBtn.addEventListener('click', () => goToScene(4));
+    nextBtn.onclick = () => goToScene(4);
 
     gsap.from('.birthday-cake', { y: 80, opacity: 0, duration: 1, ease: 'back.out(1.4)' });
     gsap.from('.layer-1', { y: 60, opacity: 0, duration: 0.8, delay: 0.3, ease: 'back.out(1.2)' });
@@ -513,7 +524,7 @@ function initScene4() {
     });
 
     cards.forEach((card, i) => {
-        card.addEventListener('click', () => {
+        card.onclick = () => {
             if (card.classList.contains('flipped')) return;
             if (i !== revealedMemories) return;
 
@@ -527,19 +538,19 @@ function initScene4() {
             );
             launchConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 15);
 
-            if (revealedMemories === cards.length) {
+             if (revealedMemories === cards.length) {
                 setTimeout(() => {
                     nextBtn.style.display = 'block';
                     gsap.from(nextBtn, { y: 20, opacity: 0, duration: 0.5 });
                 }, 500);
             }
-        });
+        };
     });
 
     // Reveal All button
     const revealAllBtn = document.getElementById('revealAllBtn');
     revealAllBtn.classList.remove('done');
-    revealAllBtn.addEventListener('click', () => {
+    revealAllBtn.onclick = () => {
         cards.forEach((card, i) => {
             setTimeout(() => {
                 if (!card.classList.contains('flipped')) {
@@ -554,9 +565,9 @@ function initScene4() {
             gsap.from(nextBtn, { y: 20, opacity: 0, duration: 0.5 });
             launchConfettiRain(60);
         }, cards.length * 100 + 300);
-    });
+    };
 
-    nextBtn.addEventListener('click', () => goToScene(5));
+    nextBtn.onclick = () => goToScene(5);
 }
 
 // ============================================
@@ -612,7 +623,7 @@ function initScene5() {
         gsap.from(nextBtn, { y: 20, opacity: 0, duration: 0.5 });
     }, 400 * items.length + 500);
 
-    nextBtn.addEventListener('click', () => goToScene(6));
+    nextBtn.onclick = () => goToScene(6);
 }
 
 // ============================================
@@ -711,13 +722,13 @@ function initScene6() {
     }
 
     // Skip button - show full text instantly
-    skipBtn.addEventListener('click', () => {
+    skipBtn.onclick = () => {
         finishTyping();
-    });
+    };
 
     setTimeout(typeNext, 800);
 
-    nextBtn.addEventListener('click', () => goToScene(7));
+    nextBtn.onclick = () => goToScene(7);
 }
 
 // ============================================
@@ -741,7 +752,7 @@ function initScene7() {
     nextBtn.style.display = 'none';
 
     moodCards.forEach(card => {
-        card.addEventListener('click', () => {
+        card.onclick = () => {
             moodCards.forEach(c => c.classList.remove('selected'));
             card.classList.add('selected');
 
@@ -761,10 +772,10 @@ function initScene7() {
                 nextBtn.style.display = 'block';
                 gsap.from(nextBtn, { y: 20, opacity: 0, duration: 0.5 });
             }, 800);
-        });
+        };
     });
 
-    nextBtn.addEventListener('click', () => goToScene(8));
+    nextBtn.onclick = () => goToScene(8);
 }
 
 // ============================================
@@ -817,38 +828,39 @@ function initScene8() {
         nowPlaying.textContent = songs[index].name;
 
         audio.addEventListener('timeupdate', () => {
-            if (audio.duration) {
+            if (audio && audio.duration) {
                 const pct = (audio.currentTime / audio.duration) * 100;
                 progressFill.style.width = pct + '%';
             }
         });
 
         audio.addEventListener('ended', () => {
+            if (!audio) return;
             stopWaves();
             playBtn.textContent = '▶️ Play';
             progressFill.style.width = '0%';
             // Auto play next
             const next = (currentSongIndex + 1) % songs.length;
             loadSong(next);
-            audio.play();
+            audio.play().catch(()=>{});
             startWaves();
             playBtn.textContent = '⏸️ Pause';
         });
     }
 
     songBtns.forEach((btn, i) => {
-        btn.addEventListener('click', () => {
+        btn.onclick = () => {
             loadSong(i);
-            audio.play();
+            audio.play().catch(()=>{});
             startWaves();
             playBtn.textContent = '⏸️ Pause';
-        });
+        };
     });
 
-    playBtn.addEventListener('click', () => {
+    playBtn.onclick = () => {
         if (!audio && currentSongIndex === -1) {
             loadSong(0);
-            audio.play();
+            audio.play().catch(()=>{});
             startWaves();
             playBtn.textContent = '⏸️ Pause';
             return;
@@ -859,43 +871,43 @@ function initScene8() {
             stopWaves();
             playBtn.textContent = '▶️ Play';
         } else if (audio) {
-            audio.play();
+            audio.play().catch(()=>{});
             startWaves();
             playBtn.textContent = '⏸️ Pause';
         }
-    });
+    };
 
-    prevBtn.addEventListener('click', () => {
+    prevBtn.onclick = () => {
         const prev = currentSongIndex <= 0 ? songs.length - 1 : currentSongIndex - 1;
         loadSong(prev);
-        audio.play();
+        audio.play().catch(()=>{});
         startWaves();
         playBtn.textContent = '⏸️ Pause';
-    });
+    };
 
-    nextBtnMusic.addEventListener('click', () => {
+    nextBtnMusic.onclick = () => {
         const next = (currentSongIndex + 1) % songs.length;
         loadSong(next);
-        audio.play();
+        audio.play().catch(()=>{});
         startWaves();
         playBtn.textContent = '⏸️ Pause';
-    });
+    };
 
-    progressBar.addEventListener('click', (e) => {
-        if (!audio) return;
+    progressBar.onclick = (e) => {
+        if (!audio || !audio.duration) return;
         const rect = progressBar.getBoundingClientRect();
         const pct = (e.clientX - rect.left) / rect.width;
         audio.currentTime = pct * audio.duration;
-    });
+    };
 
-    nextBtn.addEventListener('click', () => {
+    nextBtn.onclick = () => {
         if (audio) {
             audio.pause();
             audio = null;
         }
         stopWaves();
         goToScene(9);
-    });
+    };
 }
 
 // ============================================
@@ -948,10 +960,10 @@ function initScene9() {
     });
 
     // Replay button
-    document.getElementById('replayBtn').addEventListener('click', () => {
+    document.getElementById('replayBtn').onclick = () => {
         clearInterval(fwInterval);
         goToScene(1);
-    });
+    };
 }
 
 // ============================================
